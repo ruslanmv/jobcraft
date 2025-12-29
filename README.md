@@ -1,20 +1,34 @@
 <div align="center">
 
-# 💼 JobCraft
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="jobcraft-assets/banner-dark.svg">
+  <source media="(prefers-color-scheme: light)" srcset="jobcraft-assets/banner-light.svg">
+  <img alt="JobCraft Logo" src="jobcraft-assets/banner-light.svg" width="600">
+</picture>
+
+<br/>
 
 ### Your Intelligent Job Application Copilot
 
 **Compliance-First • Privacy-First • Human-in-the-Loop**
 
-[![GitHub stars](https://img.shields.io/github/stars/ruslanmv/jobcraft?style=for-the-badge&logo=github)](https://github.com/ruslanmv/jobcraft/stargazers)
-[![License](https://img.shields.io/badge/license-MIT-blue.svg?style=for-the-badge)](LICENSE)
-[![Python](https://img.shields.io/badge/python-3.11+-blue.svg?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
-[![React](https://img.shields.io/badge/react-18.2-61DAFB.svg?style=for-the-badge&logo=react&logoColor=white)](https://reactjs.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688.svg?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+<br/>
+
+[![GitHub stars](https://img.shields.io/github/stars/ruslanmv/jobcraft?style=for-the-badge&logo=github&color=0f172a)](https://github.com/ruslanmv/jobcraft/stargazers)
+[![License](https://img.shields.io/badge/license-Apache_2.0-blue.svg?style=for-the-badge&color=0f172a)](LICENSE)
+[![OllaBridge](https://raw.githubusercontent.com/ruslanmv/ollabridge/master/logos/obridge-badge.tech.svg)](https://github.com/ruslanmv/ollabridge)
+[![Python](https://img.shields.io/badge/python-3.11+-blue.svg?style=for-the-badge&logo=python&logoColor=white&color=0f172a)](https://www.python.org/)
+[![React](https://img.shields.io/badge/react-18.2-61DAFB.svg?style=for-the-badge&logo=react&logoColor=white&color=0f172a)](https://reactjs.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688.svg?style=for-the-badge&logo=fastapi&logoColor=white&color=0f172a)](https://fastapi.tiangolo.com/)
+
+
+<br/>
 
 [🚀 Features](#-features) • [📦 Installation](#-installation) • [🎯 Quick Start](#-quick-start) • [📖 Documentation](#-documentation) • [🤝 Contributing](#-contributing)
 
 </div>
+
+---
 
 ---
 
@@ -59,6 +73,9 @@ Defaults for IT, DE, GB, CH with localized formatting.
 
 ---
 
+[![Compatible with OllaBridge](https://raw.githubusercontent.com/ruslanmv/ollabridge/refs/heads/master/logos/obridge-readme-badge.svg)](https://github.com/ruslanmv/ollabridge)
+
+
 ## ✨ Features
 
 ### 🎨 **Modern Dashboard**
@@ -94,6 +111,8 @@ Professional interface with real-time compliance monitoring and activity trackin
 
 **Recommended:** Use **OllaBridge** for 100% privacy - your AI runs on your computer.
 
+
+
 ---
 
 ## 🏗️ Architecture
@@ -108,6 +127,7 @@ graph TB
     C -->|Ollama| G[Your Computer]
     E -->|Greenhouse| H[Company Job Boards]
     E -->|Lever| I[Company Job Boards]
+
 ```
 
 ---
@@ -115,21 +135,10 @@ graph TB
 ## 🛠️ Tech Stack
 
 ### Frontend
-![React](https://img.shields.io/badge/React-20232A?style=flat&logo=react&logoColor=61DAFB)
-![Vite](https://img.shields.io/badge/Vite-646CFF?style=flat&logo=vite&logoColor=white)
-![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=flat&logo=tailwind-css&logoColor=white)
-![Lucide](https://img.shields.io/badge/Lucide-000000?style=flat&logo=lucide&logoColor=white)
 
 ### Backend
-![Python](https://img.shields.io/badge/Python-3776AB?style=flat&logo=python&logoColor=white)
-![FastAPI](https://img.shields.io/badge/FastAPI-009688?style=flat&logo=fastapi&logoColor=white)
-![SQLite](https://img.shields.io/badge/SQLite-003B57?style=flat&logo=sqlite&logoColor=white)
-![Pydantic](https://img.shields.io/badge/Pydantic-E92063?style=flat&logo=pydantic&logoColor=white)
 
 ### AI Integration
-![Ollama](https://img.shields.io/badge/Ollama-000000?style=flat&logo=ollama&logoColor=white)
-![OpenAI](https://img.shields.io/badge/OpenAI-412991?style=flat&logo=openai&logoColor=white)
-![Anthropic](https://img.shields.io/badge/Anthropic-191919?style=flat&logo=anthropic&logoColor=white)
 
 ---
 
@@ -137,16 +146,16 @@ graph TB
 
 ### Prerequisites
 
-- **Python 3.11+** ([Download](https://www.python.org/downloads/))
-- **Node.js 18+** ([Download](https://nodejs.org/))
-- **uv** (Python package manager) - `pip install uv`
-- **OllaBridge** (optional, for local AI) - `pip install ollabridge`
+* **Python 3.11+** ([Download](https://www.python.org/downloads/))
+* **Node.js 18+** ([Download](https://nodejs.org/))
+* **uv** (Python package manager) - `pip install uv`
+* **OllaBridge** (optional, for local AI) - `pip install ollabridge`
 
 ### 🚀 Quick Install
 
 ```bash
 # Clone the repository
-git clone https://github.com/ruslanmv/jobcraft.git
+git clone [https://github.com/ruslanmv/jobcraft.git](https://github.com/ruslanmv/jobcraft.git)
 cd jobcraft
 
 # Install dependencies
@@ -157,6 +166,7 @@ cp .env.example .env
 
 # Edit .env with your configuration
 nano .env
+
 ```
 
 ### 🔧 Configuration
@@ -185,6 +195,7 @@ SMTP_HOST=smtp.gmail.com
 SMTP_PORT=587
 SMTP_USER=your-email@gmail.com
 SMTP_PASS=your-app-password
+
 ```
 
 ---
@@ -204,6 +215,7 @@ ollabridge start
 ollabridge start --share
 
 # Copy the API key that's displayed
+
 ```
 
 ### 2️⃣ Start JobCraft
@@ -211,12 +223,14 @@ ollabridge start --share
 ```bash
 # Start both frontend and backend
 make dev
+
 ```
 
 The application will open at:
-- 🎨 **Frontend:** http://localhost:5173
-- ⚡ **API:** http://localhost:8000
-- 📚 **API Docs:** http://localhost:8000/docs
+
+* 🎨 **Frontend:** http://localhost:5173
+* ⚡ **API:** http://localhost:8000
+* 📚 **API Docs:** http://localhost:8000/docs
 
 ### 3️⃣ First Time Setup
 
@@ -236,6 +250,7 @@ The application will open at:
 
 # Via API:
 curl http://localhost:8000/api/discover/greenhouse/stripe?countries=IT,DE,GB
+
 ```
 
 ### 📝 Crafting Application Packets
@@ -247,10 +262,11 @@ curl http://localhost:8000/api/discover/greenhouse/stripe?countries=IT,DE,GB
 5. Click **"Craft Packet"**
 
 JobCraft will generate:
-- ✅ Tailored cover letter
-- ✅ Optimized resume bullets
-- ✅ Screening question responses
-- ✅ Pre-submission checklist
+
+* ✅ Tailored cover letter
+* ✅ Optimized resume bullets
+* ✅ Screening question responses
+* ✅ Pre-submission checklist
 
 ### 📊 Tracking Applications
 
@@ -269,6 +285,7 @@ GET /api/tracker/jobs
 
 # Send email digest
 POST /api/digest/email?to_email=you@example.com
+
 ```
 
 ---
@@ -293,6 +310,7 @@ make logs-container
 
 # Stop container
 make stop-container
+
 ```
 
 #### Deploy to Render
@@ -304,16 +322,21 @@ make stop-container
 3. Select your repository
 4. Render auto-detects the Dockerfile
 5. Add environment variables:
-   ```
-   OLLABRIDGE_BASE_URL=https://your-tunnel-url
-   OLLABRIDGE_API_KEY=sk-ollabridge-xxxxx
-   ```
+```
+OLLABRIDGE_BASE_URL=https://your-tunnel-url
+OLLABRIDGE_API_KEY=sk-ollabridge-xxxxx
+
+```
+
+
 6. Click "Create Web Service"
 
 **Or use render.yaml:**
+
 ```bash
 # render.yaml is included - Render will auto-configure everything
 git push origin main
+
 ```
 
 #### Deploy to Railway
@@ -325,6 +348,7 @@ npm i -g @railway/cli
 # Deploy
 railway init
 railway up
+
 ```
 
 #### Deploy to Docker Hub
@@ -338,6 +362,7 @@ make publish
 
 # Pull from anywhere
 docker pull docker.io/your-username/jobcraft:latest
+
 ```
 
 #### Environment Variables
@@ -345,13 +370,13 @@ docker pull docker.io/your-username/jobcraft:latest
 At least one LLM provider is required:
 
 | Variable | Description | Example |
-|----------|-------------|---------|
+| --- | --- | --- |
 | `OLLABRIDGE_BASE_URL` | OllaBridge tunnel URL | `https://abc.ollabridge.com` |
 | `OLLABRIDGE_API_KEY` | API key from ollabridge | `sk-ollabridge-xxxxx` |
 | `DEFAULT_PROVIDER` | Active provider | `ollabridge` |
 | `PORT` | Application port | `8000` |
 
-📖 **Complete Guide:** See [DOCKER_DEPLOYMENT.md](DOCKER_DEPLOYMENT.md) for detailed instructions.
+📖 **Complete Guide:** See [DOCKER_DEPLOYMENT.md](https://www.google.com/search?q=DOCKER_DEPLOYMENT.md) for detailed instructions.
 
 ---
 
@@ -363,7 +388,7 @@ At least one LLM provider is required:
 
 1. Go to [Vercel Dashboard](https://vercel.com/new)
 2. Import your GitHub repository
-3. **Set Root Directory to `frontend`**
+3. **Set Root Directory to `frontend**`
 4. Click Deploy
 
 **Using Vercel CLI**
@@ -378,9 +403,10 @@ vercel
 # When prompted, set directory to: frontend
 # For production
 vercel --prod
+
 ```
 
-📖 **Detailed Guide:** See [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md) for complete instructions.
+📖 **Detailed Guide:** See [VERCEL_DEPLOYMENT.md](https://www.google.com/search?q=VERCEL_DEPLOYMENT.md) for complete instructions.
 
 #### Deploy Backend Only
 
@@ -394,6 +420,7 @@ make build-backend
 docker run -p 8000:8000 \
   -e OLLABRIDGE_API_KEY=sk-xxx \
   jobcraft:backend-latest
+
 ```
 
 ---
@@ -401,6 +428,7 @@ docker run -p 8000:8000 \
 ## 🔐 Privacy & Compliance
 
 ### What JobCraft DOES:
+
 ✅ Uses official ATS APIs (Greenhouse, Lever, Ashby)
 ✅ Requires human review before any submission
 ✅ Stores data locally (SQLite)
@@ -408,6 +436,7 @@ docker run -p 8000:8000 \
 ✅ Respects platform Terms of Service
 
 ### What JobCraft DOES NOT DO:
+
 ❌ Web scraping (LinkedIn, Indeed, etc.)
 ❌ Automated submissions
 ❌ Cookie/token theft
@@ -428,6 +457,7 @@ GET /api/discover/greenhouse/{board_token}?countries=IT,DE
 
 # Lever
 GET /api/discover/lever/{company_slug}?countries=GB,CH
+
 ```
 
 ### Packet Generation
@@ -442,6 +472,7 @@ Content-Type: multipart/form-data
 - job_description: "..."
 - country: "IT"
 - cv_file: <file>
+
 ```
 
 ### Tracker
@@ -455,6 +486,7 @@ GET /api/tracker/jobs
 
 # Update status
 PUT /api/tracker/jobs/{job_id}
+
 ```
 
 Full API documentation available at http://localhost:8000/docs
@@ -466,17 +498,21 @@ Full API documentation available at http://localhost:8000/docs
 We welcome contributions! Here's how you can help:
 
 ### 🐛 Report Bugs
+
 Open an issue with:
-- Clear description
-- Steps to reproduce
-- Expected vs actual behavior
-- Environment details
+
+* Clear description
+* Steps to reproduce
+* Expected vs actual behavior
+* Environment details
 
 ### 💡 Suggest Features
+
 Open an issue with:
-- Feature description
-- Use case
-- Mockups (if applicable)
+
+* Feature description
+* Use case
+* Mockups (if applicable)
 
 ### 🔧 Submit Pull Requests
 
@@ -499,33 +535,34 @@ uv pip install -e ".[dev]"
 cd frontend
 npm install
 npm run dev
+
 ```
 
 ---
 
 ## 🗺️ Roadmap
 
-- [ ] **v1.1** - Chrome Extension for easy job import
-- [ ] **v1.2** - Multi-language support (German, Italian, French)
-- [ ] **v1.3** - Interview preparation mode
-- [ ] **v1.4** - Network analysis and referral tracking
-- [ ] **v2.0** - Mobile app (iOS/Android)
+* [ ] **v1.1** - Chrome Extension for easy job import
+* [ ] **v1.2** - Multi-language support (German, Italian, French)
+* [ ] **v1.3** - Interview preparation mode
+* [ ] **v1.4** - Network analysis and referral tracking
+* [ ] **v2.0** - Mobile app (iOS/Android)
 
 ---
 
 ## 📄 License
 
-This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the **Apache 2.0 License** - see the [LICENSE](https://www.google.com/search?q=LICENSE) file for details.
 
 ---
 
 ## 🙏 Acknowledgments
 
-- **[OllaBridge](https://github.com/ruslanmv/ollabridge)** - Local AI bridge for privacy-first LLM access
-- **[Ollama](https://ollama.ai)** - Local LLM runtime
-- **[FastAPI](https://fastapi.tiangolo.com/)** - Modern Python web framework
-- **[React](https://react.dev/)** - UI framework
-- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS
+* **[OllaBridge](https://github.com/ruslanmv/ollabridge)** - Local AI bridge for privacy-first LLM access
+* **[Ollama](https://ollama.ai)** - Local LLM runtime
+* **[FastAPI](https://fastapi.tiangolo.com/)** - Modern Python web framework
+* **[React](https://react.dev/)** - UI framework
+* **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS
 
 ---
 
@@ -562,16 +599,13 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 ### 🌟 Star History
 
-[![Star History Chart](https://api.star-history.com/svg?repos=ruslanmv/jobcraft&type=Date)](https://star-history.com/#ruslanmv/jobcraft&Date)
-
 ---
 
 ### Made with ❤️ for job seekers who value compliance and privacy
 
 **If JobCraft helped you land your dream job, please star this repo!**
 
-[![GitHub stars](https://img.shields.io/github/stars/ruslanmv/jobcraft?style=social)](https://github.com/ruslanmv/jobcraft/stargazers)
-
-[⬆ Back to Top](#-jobcraft)
+[⬆ Back to Top](https://www.google.com/search?q=%23-jobcraft)
 
 </div>
+
