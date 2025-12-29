@@ -28,7 +28,9 @@ import {
   Activity,
   Server,
   Laptop,
-  Star
+  Star,
+  Menu,
+  X
 } from 'lucide-react';
 import SettingsView from './components/SettingsView.jsx';
 
@@ -95,7 +97,7 @@ const COUNTRIES = [
 const PROVIDERS = [
   { id: 'ollabridge', label: 'Your Computer (OllaBridge)', icon: Laptop, desc: 'Private, free, local AI via secure tunnel.', recommended: true },
   { id: 'openai', label: 'OpenAI GPT-4', icon: Bot, desc: 'High reasoning capabilities. API Key required.' },
-  { id: 'anthropic', label: 'Claude 3.5', icon: Bot, desc: 'Excellent for creative writing. API Key required.' },
+  { id: 'claude', label: 'Claude 3.5', icon: Bot, desc: 'Excellent for creative writing. API Key required.' },
   { id: 'gemini', label: 'Gemini Pro', icon: Bot, desc: 'Fast and multimodal. API Key required.' },
   { id: 'watsonx', label: 'IBM watsonx', icon: Bot, desc: 'Enterprise grade security. API Key required.' },
 ];
@@ -658,25 +660,59 @@ const App = () => {
   const [activeTab, setActiveTab] = useState('dashboard');
   const [globalProvider, setGlobalProvider] = useState('ollabridge');
   const [ollabridgeConnected, setOllabridgeConnected] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
+
+  // Load active provider from backend on startup
+  useEffect(() => {
+    (async () => {
+      try {
+        const res = await fetch('/api/providers/status');
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data.active_provider) setGlobalProvider(data.active_provider);
+      } catch (e) {
+        console.error('Failed to load active provider', e);
+      }
+    })();
+  }, []);
 
   return (
     <div className="flex h-screen bg-slate-50 font-sans text-slate-900 selection:bg-indigo-100 selection:text-indigo-900">
 
-      {/* Sidebar */}
-      <aside className="w-64 bg-white border-r border-slate-200 flex flex-col fixed inset-y-0 z-10">
+      {/* Mobile Sidebar Backdrop */}
+      {mobileSidebarOpen && (
+        <div
+          className="fixed inset-0 bg-slate-900/50 z-40 md:hidden"
+          onClick={() => setMobileSidebarOpen(false)}
+        />
+      )}
+
+      {/* Sidebar - Desktop: always visible, Mobile: drawer overlay */}
+      <aside className={`w-64 bg-white border-r border-slate-200 flex flex-col fixed inset-y-0 z-50 transition-transform duration-300 md:translate-x-0 ${
+        mobileSidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      } md:z-10`}>
         <div className="p-6">
-          <div className="flex items-center gap-2 text-indigo-700 mb-8">
-            <div className="bg-indigo-600 text-white p-1.5 rounded-lg">
+          <div className="flex items-center justify-between gap-2 text-indigo-700 mb-8">
+            <div className="flex items-center gap-2">
+              <div className="bg-indigo-600 text-white p-1.5 rounded-lg">
                 <Briefcase size={20} />
+              </div>
+              <h1 className="text-xl font-bold tracking-tight">Jobcraft</h1>
             </div>
-            <h1 className="text-xl font-bold tracking-tight">Jobcraft</h1>
+            {/* Mobile close button */}
+            <button
+              onClick={() => setMobileSidebarOpen(false)}
+              className="md:hidden p-1.5 rounded-lg hover:bg-slate-100 text-slate-500"
+            >
+              <X size={20} />
+            </button>
           </div>
 
           <nav className="space-y-1">
-            <SidebarItem icon={LayoutDashboard} label="Dashboard" active={activeTab === 'dashboard'} onClick={() => setActiveTab('dashboard')} />
-            <SidebarItem icon={Search} label="Find Jobs" active={activeTab === 'discovery'} onClick={() => setActiveTab('discovery')} />
-            <SidebarItem icon={Cpu} label="Workbench" active={activeTab === 'workbench'} onClick={() => setActiveTab('workbench')} />
-            <SidebarItem icon={FileText} label="Applications" active={activeTab === 'applications'} onClick={() => setActiveTab('applications')} />
+            <SidebarItem icon={LayoutDashboard} label="Dashboard" active={activeTab === 'dashboard'} onClick={() => { setActiveTab('dashboard'); setMobileSidebarOpen(false); }} />
+            <SidebarItem icon={Search} label="Find Jobs" active={activeTab === 'discovery'} onClick={() => { setActiveTab('discovery'); setMobileSidebarOpen(false); }} />
+            <SidebarItem icon={Cpu} label="Workbench" active={activeTab === 'workbench'} onClick={() => { setActiveTab('workbench'); setMobileSidebarOpen(false); }} />
+            <SidebarItem icon={FileText} label="Applications" active={activeTab === 'applications'} onClick={() => { setActiveTab('applications'); setMobileSidebarOpen(false); }} />
           </nav>
         </div>
 
@@ -699,7 +735,7 @@ const App = () => {
                 </div>
             </div>
             <button
-                onClick={() => setActiveTab('settings')}
+                onClick={() => { setActiveTab('settings'); setMobileSidebarOpen(false); }}
                 className={`flex items-center space-x-3 px-2 py-2 w-full transition-colors rounded-lg ${
                     activeTab === 'settings'
                     ? 'bg-indigo-50 text-indigo-700'
@@ -724,8 +760,15 @@ const App = () => {
       </aside>
 
       {/* Main Content */}
-      <main className="flex-1 ml-64 p-8 overflow-y-auto">
+      <main className="flex-1 ml-0 md:ml-64 p-4 md:p-8 overflow-y-auto">
         <header className="flex justify-between items-center mb-8">
+            {/* Mobile menu button */}
+            <button
+              onClick={() => setMobileSidebarOpen(true)}
+              className="md:hidden p-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50"
+            >
+              <Menu size={20} className="text-slate-600" />
+            </button>
             <div className="flex items-center gap-4">
                 {/* Breadcrumbs or Title could go here */}
             </div>
@@ -744,7 +787,14 @@ const App = () => {
         {activeTab === 'discovery' && <DiscoveryView />}
         {activeTab === 'workbench' && <WorkbenchView provider={globalProvider} />}
         {activeTab === 'applications' && <ApplicationsView />}
-        {activeTab === 'settings' && <SettingsView />}
+        {activeTab === 'settings' && (
+          <SettingsView
+            selectedProvider={globalProvider}
+            setSelectedProvider={setGlobalProvider}
+            ollabridgeConnected={ollabridgeConnected}
+            setOllabridgeConnected={setOllabridgeConnected}
+          />
+        )}
       </main>
     </div>
   );
