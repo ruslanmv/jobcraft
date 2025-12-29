@@ -1,0 +1,94 @@
+# Render Blueprint for JobCraft Copilot
+# Automated deployment configuration for Render.com
+#
+# Usage:
+#   1. Push this file to your repository
+#   2. Go to https://dashboard.render.com/select-repo
+#   3. Select your repository
+#   4. Render will automatically detect and use this configuration
+#
+# Documentation: https://render.com/docs/blueprint-spec
+
+services:
+  # Full-stack web service (Frontend + Backend in single container)
+  - type: web
+    name: jobcraft-copilot
+    env: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    plan: free  # Change to 'starter' for production
+    region: oregon  # or frankfurt, singapore, etc.
+
+    # Health check configuration
+    healthCheckPath: /health
+
+    # Auto-deploy on git push
+    autoDeploy: true
+
+    # Environment variables
+    envVars:
+      # Application settings
+      - key: PORT
+        value: 8000
+
+      - key: HOST
+        value: 0.0.0.0
+
+      # Default LLM provider
+      - key: DEFAULT_PROVIDER
+        value: ollabridge
+
+      # OllaBridge configuration (recommended for privacy)
+      - key: OLLABRIDGE_BASE_URL
+        sync: false  # Set in Render dashboard
+
+      - key: OLLABRIDGE_API_KEY
+        sync: false  # Set in Render dashboard (secret)
+
+      - key: OLLABRIDGE_MODEL
+        value: deepseek-r1
+
+      # Ollama configuration (optional)
+      # - key: OLLAMA_BASE_URL
+      #   value: http://localhost:11434
+
+      # - key: OLLAMA_MODEL
+      #   value: llama2
+
+      # OpenAI configuration (optional)
+      # - key: OPENAI_API_KEY
+      #   sync: false
+
+      # - key: OPENAI_MODEL
+      #   value: gpt-4
+
+      # Anthropic Claude configuration (optional)
+      # - key: ANTHROPIC_API_KEY
+      #   sync: false
+
+      # - key: CLAUDE_MODEL
+      #   value: claude-3-5-sonnet-20241022
+
+      # Google Gemini configuration (optional)
+      # - key: GEMINI_API_KEY
+      #   sync: false
+
+      # - key: GEMINI_MODEL
+      #   value: gemini-2.0-flash-exp
+
+      # IBM Watsonx configuration (optional)
+      # - key: WATSONX_API_KEY
+      #   sync: false
+
+      # - key: WATSONX_PROJECT_ID
+      #   sync: false
+
+      # - key: WATSONX_MODEL_ID
+      #   value: ibm/granite-13b-chat-v2
+
+# Note: After deployment, set the following secrets in Render dashboard:
+# 1. Go to your service → Environment
+# 2. Add secret values for:
+#    - OLLABRIDGE_BASE_URL (your OllaBridge tunnel URL)
+#    - OLLABRIDGE_API_KEY (copy from `ollabridge start` output)
+# 3. Redeploy the service
