@@ -9,6 +9,7 @@ from backend.routers.discovery import router as discovery_router
 from backend.routers.tracker import router as tracker_router
 from backend.routers.digest import router as digest_router
 from backend.routers.assist import router as assist_router
+from backend.routers.providers import router as providers_router
 from backend.core.db import init_db
 
 app = FastAPI(title='JobCraft Copilot API')
@@ -28,6 +29,7 @@ def _startup():
 app.include_router(health_router)
 app.include_router(meta_router, prefix='/api')
 app.include_router(ollabridge_router, prefix='/api')
+app.include_router(providers_router)
 app.include_router(jobcraft_router, prefix='/api')
 app.include_router(discovery_router, prefix='/api')
 app.include_router(tracker_router, prefix='/api')
