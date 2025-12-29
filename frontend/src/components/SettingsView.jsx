@@ -15,7 +15,8 @@ import {
   AlertTriangle,
   Settings,
   Key,
-  Save
+  Save,
+  ChevronDown
 } from 'lucide-react';
 
 const OllaBridgeSetup = ({ isConnected, setIsConnected }) => {
@@ -360,6 +361,7 @@ const SettingsView = ({ selectedProvider, setSelectedProvider, ollabridgeConnect
         gemini: { apiKey: '', model: '' },
         watsonx: { apiKey: '', projectId: '', model: '', baseUrl: '' },
     });
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     // Load provider configs on mount
     useEffect(() => {
@@ -420,6 +422,8 @@ const SettingsView = ({ selectedProvider, setSelectedProvider, ollabridgeConnect
         }
     }, [selectedProvider]);
 
+    const activeProviderData = PROVIDERS.find(p => p.id === selectedProvider) || PROVIDERS[0];
+
     return (
         <div className="max-w-3xl mx-auto space-y-6 h-full flex flex-col animate-in fade-in slide-in-from-bottom-4 duration-500">
             <div className="shrink-0">
@@ -427,88 +431,85 @@ const SettingsView = ({ selectedProvider, setSelectedProvider, ollabridgeConnect
                 <p className="text-slate-500 mt-1">Manage global preferences and AI configurations.</p>
             </div>
 
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm flex flex-col overflow-hidden max-h-[calc(100vh-12rem)]">
-                <div className="flex items-center justify-between border-b border-slate-100 px-6 py-4 bg-slate-50/50 shrink-0">
-                     <h3 className="font-semibold text-slate-800 flex items-center gap-2">
-                        <Cpu size={18} /> AI Engine
+            <div className="bg-white border border-slate-200 rounded-xl shadow-sm overflow-visible">
+                <div className="p-6">
+                     <h3 className="font-semibold text-slate-800 flex items-center gap-2 mb-4">
+                        <Cpu size={18} /> AI Provider
                     </h3>
-                    <span className="text-xs text-slate-400 font-medium bg-white px-2 py-1 rounded border border-slate-200">
-                        Active: <span className="font-bold text-indigo-600 uppercase">{selectedProvider}</span>
-                    </span>
-                </div>
 
-                <div className="overflow-y-auto p-6 custom-scrollbar">
-                    <div className="space-y-3">
-                        {PROVIDERS.map(p => (
-                            <div key={p.id} className={p.disabled ? "opacity-50 pointer-events-none grayscale" : ""}>
-                                <button
-                                    onClick={() => !p.disabled && setSelectedProvider(p.id)}
-                                    disabled={p.disabled}
-                                    className={`w-full flex items-center gap-4 px-4 py-4 rounded-xl border text-left transition-all ${
-                                        selectedProvider === p.id
-                                        ? 'bg-indigo-50 border-indigo-200 ring-1 ring-indigo-200 shadow-sm'
-                                        : 'bg-white border-slate-200 hover:border-slate-300 hover:bg-slate-50'
-                                    }`}
-                                >
-                                    <div className={`p-3 rounded-lg shrink-0 ${selectedProvider === p.id ? 'bg-indigo-100 text-indigo-600' : 'bg-slate-100 text-slate-500'}`}>
-                                        <p.icon size={24} />
+                    {/* Custom Dropdown Selector */}
+                    <div className="relative">
+                        <button
+                            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+                            className="w-full flex items-center justify-between px-4 py-3 bg-white border border-slate-300 rounded-xl hover:border-indigo-500 focus:ring-2 focus:ring-indigo-500/20 transition-all text-left"
+                        >
+                            <div className="flex items-center gap-3">
+                                <div className="p-2 bg-indigo-50 text-indigo-600 rounded-lg">
+                                    <activeProviderData.icon size={20} />
+                                </div>
+                                <div>
+                                    <div className="font-semibold text-slate-900 flex items-center gap-2">
+                                        {activeProviderData.label}
+                                        {activeProviderData.recommended && <span className="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-bold">RECOMMENDED</span>}
                                     </div>
-                                    <div className="flex-1">
-                                        <div className="flex items-center gap-2">
-                                            <span className={`font-semibold ${selectedProvider === p.id ? 'text-indigo-900' : 'text-slate-900'}`}>{p.label}</span>
-                                            {p.recommended && <span className="text-[10px] bg-emerald-100 text-emerald-700 px-2 py-0.5 rounded-full font-bold tracking-wide">RECOMMENDED</span>}
-                                            {p.disabled && <span className="text-[10px] bg-slate-100 text-slate-500 px-2 py-0.5 rounded-full font-bold tracking-wide">SOON</span>}
-                                        </div>
-                                        <div className="text-sm text-slate-500 mt-0.5">
-                                            {p.desc}
-                                        </div>
-                                    </div>
-                                    {selectedProvider === p.id ? (
-                                        <CheckCircle2 size={24} className="text-indigo-600 shrink-0" />
-                                    ) : (
-                                        <div className="w-6 h-6 rounded-full border-2 border-slate-200 shrink-0" />
-                                    )}
-                                </button>
-
-                                {/* Logic for expanding the settings panel */}
-                                {selectedProvider === p.id && (
-                                    <div className="ml-4 pl-6 border-l-2 border-indigo-100 mt-2 animate-in slide-in-from-top-2">
-                                        {p.id === 'ollabridge' ? (
-                                            <OllaBridgeSetup isConnected={ollabridgeConnected} setIsConnected={setOllabridgeConnected} />
-                                        ) : (
-                                            <GenericProviderConfig
-                                                providerId={p.id}
-                                                config={configs[p.id] || {}}
-                                                onUpdate={(newConfig) => updateConfig(p.id, newConfig)}
-                                            />
-                                        )}
-                                    </div>
-                                )}
+                                    <div className="text-xs text-slate-500">{activeProviderData.desc}</div>
+                                </div>
                             </div>
-                        ))}
+                            <ChevronDown size={20} className={`text-slate-400 transition-transform duration-200 ${isDropdownOpen ? 'rotate-180' : ''}`} />
+                        </button>
+
+                        {isDropdownOpen && (
+                            <div className="absolute top-full left-0 right-0 mt-2 bg-white border border-slate-200 rounded-xl shadow-xl z-20 max-h-80 overflow-y-auto p-2">
+                                {PROVIDERS.map(p => (
+                                    <button
+                                        key={p.id}
+                                        onClick={() => {
+                                            if (!p.disabled) {
+                                                setSelectedProvider(p.id);
+                                                setIsDropdownOpen(false);
+                                            }
+                                        }}
+                                        disabled={p.disabled}
+                                        className={`w-full flex items-center gap-3 px-3 py-3 rounded-lg text-left transition-colors ${
+                                            selectedProvider === p.id
+                                            ? 'bg-indigo-50 text-indigo-900'
+                                            : p.disabled ? 'opacity-50 cursor-not-allowed' : 'hover:bg-slate-50 text-slate-700'
+                                        }`}
+                                    >
+                                        <div className={`p-1.5 rounded-md ${selectedProvider === p.id ? 'bg-white text-indigo-600' : 'bg-slate-100 text-slate-500'}`}>
+                                            <p.icon size={16} />
+                                        </div>
+                                        <div className="flex-1">
+                                            <div className="text-sm font-medium flex items-center gap-2">
+                                                {p.label}
+                                                {p.disabled && <span className="text-[9px] bg-slate-100 text-slate-500 px-1.5 py-0.5 rounded border border-slate-200">SOON</span>}
+                                            </div>
+                                        </div>
+                                        {selectedProvider === p.id && <CheckCircle2 size={16} className="text-indigo-600" />}
+                                    </button>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Dynamic Configuration Panel */}
+                    <div className="mt-2">
+                        {selectedProvider === 'ollabridge' ? (
+                            <OllaBridgeSetup isConnected={ollabridgeConnected} setIsConnected={setOllabridgeConnected} />
+                        ) : (
+                            <GenericProviderConfig
+                                providerId={selectedProvider}
+                                config={configs[selectedProvider] || {}}
+                                onUpdate={(newConfig) => updateConfig(selectedProvider, newConfig)}
+                            />
+                        )}
                     </div>
                 </div>
 
-                <div className="bg-slate-50 border-t border-slate-100 p-4 text-center shrink-0">
+                <div className="bg-slate-50 border-t border-slate-100 p-4 text-center">
                     <p className="text-xs text-slate-500">
                         JobCraft respects your privacy. Cloud keys are stored locally using AES-256 encryption.
                     </p>
-                </div>
-            </div>
-
-            {/* Regional Settings */}
-            <div className="bg-white border border-slate-200 rounded-xl shadow-sm p-6 shrink-0">
-                <h3 className="font-semibold text-slate-800 flex items-center gap-2 border-b border-slate-100 pb-4 mb-4">
-                    <Globe size={18} /> Regional Defaults
-                </h3>
-                <div className="text-sm text-slate-600">
-                    <p className="mb-2">Current defaults for new application packets:</p>
-                    <ul className="list-disc list-inside space-y-1 text-slate-500">
-                        <li>Countries: IT, DE, GB, CH</li>
-                        <li>Locale: en-GB</li>
-                        <li>Timezone: Europe/Rome</li>
-                    </ul>
-                    <p className="mt-4 text-xs text-slate-400">Configure these in your .env file on the backend.</p>
                 </div>
             </div>
         </div>
